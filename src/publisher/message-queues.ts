@@ -274,9 +274,7 @@ export class OrderedQueue extends MessageQueue {
     }
 
     if (this.inFlight) {
-      // in the event that a batch is currently in flight, we can overfill
-      // the next batch as long as it hasn't hit the API limit
-      if (this.currentBatch.isAtMax()) {
+      if (this.currentBatch.isFull()) {
         this.batches.unshift(this.createBatch());
       }
 
